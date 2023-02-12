@@ -27,8 +27,13 @@ public class PostServiceImpl implements PostService{
             List<Post> followingPosts = postRepo.findByUserId(following.getFollowing().getId());
             posts.addAll(followingPosts);
         }
-    
+        
         return posts;
+    }
+
+    @Override
+    public void createPost(Post post) {
+        postRepo.save(post);
     }
     
 }
