@@ -1,17 +1,5 @@
 package com.springnet.springnet.models;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.Table;
-import lombok.Data;
-
-@Entity
-@Table(name = "posts")
-@Data
-public class Post {
-    
-}
-package com.springnet.springnet.models;
-
 import java.time.LocalDateTime;
 
 import jakarta.persistence.Column;
@@ -25,25 +13,21 @@ import jakarta.persistence.Table;
 import lombok.Data;
 
 @Entity
-@Table(name = "posts")
+@Table(name = "likes")
 @Data
-public class Post {
-    
+public class Like {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "content")
-    private String content;
-
-    @Column(name = "image")
-    private String image;
-
     @Column(name = "date")
-    private LocalDateTime publicationDate;
+    private LocalDateTime date;
 
     @ManyToOne
     @JoinColumn(name = "user_id")
     private User user;
-
+    
+    @ManyToOne
+    @JoinColumn(name = "post_id")
+    private Post post;
 }
