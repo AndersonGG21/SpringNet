@@ -54,7 +54,7 @@ public class PostServiceImpl implements PostService{
         // Post post = postRepo.findById(like.getPost().getId()).orElse(null);
         // User user = userRepo.findById(like.getUser().getId()).orElse(null);
         
-        Like newLike = likeRepo.findById(like.getId()).orElse(null);
+        Like newLike = likeRepo.findByPostAndUser(like.getPost(), like.getUser());
 
         if (newLike == null) {
             likeRepo.save(like);
