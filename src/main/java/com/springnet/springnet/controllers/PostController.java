@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.springnet.springnet.models.Like;
 import com.springnet.springnet.models.Post;
 import com.springnet.springnet.services.PostServiceImpl;
 
@@ -28,6 +29,11 @@ public class PostController {
     @PostMapping("/new-post")
     public void createPost(@RequestBody Post post){
         postService.createPost(post);
+    }
+
+    @PostMapping("/like")
+    public void likePost(@RequestBody Like like){
+        postService.likepost(like);
     }
 
 }
