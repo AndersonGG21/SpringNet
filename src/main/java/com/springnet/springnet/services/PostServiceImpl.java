@@ -50,16 +50,12 @@ public class PostServiceImpl implements PostService{
 
     @Override
     public void likepost(Like like) {
-        System.out.println(like.toString());
-        // Post post = postRepo.findById(like.getPost().getId()).orElse(null);
-        // User user = userRepo.findById(like.getUser().getId()).orElse(null);
-        
-        Like newLike = likeRepo.findByPostAndUser(like.getPost(), like.getUser());
 
+        Like newLike = likeRepo.findByPostAndUser(like.getPost(), like.getUser());
         if (newLike == null) {
             likeRepo.save(like);
         }else{
-            likeRepo.delete(like);
+            likeRepo.delete(newLike);
         }
     }
     
