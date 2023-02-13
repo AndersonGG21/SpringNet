@@ -5,9 +5,13 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.springnet.springnet.models.Follow;
+import com.springnet.springnet.models.Like;
 import com.springnet.springnet.models.Post;
+import com.springnet.springnet.models.User;
 import com.springnet.springnet.repositories.PostRepository;
+import com.springnet.springnet.repositories.UserRepository;
 import com.springnet.springnet.repositories.FollowRepository;
+import com.springnet.springnet.repositories.LikeRepository;
 
 @Service
 public class PostServiceImpl implements PostService{
@@ -17,6 +21,14 @@ public class PostServiceImpl implements PostService{
 
     @Autowired
     private PostRepository postRepo;
+
+    @Autowired
+    private UserRepository userRepo;
+
+    @Autowired
+    private LikeRepository likeRepo;
+
+
 
     @Override
     public List<Post> findPostByFollowing(Long userId) {
@@ -34,6 +46,23 @@ public class PostServiceImpl implements PostService{
     @Override
     public void createPost(Post post) {
         postRepo.save(post);
+    }
+
+    @Override
+    public void likepost(Like like) {
+        Post post = postRepo.findById(like.getPost().getId()).orElse(null);
+        User user = userRepo.findById(like.getUser().getId()).orElse(null);
+        
+        Like newLike = likeRepo.findById(like.getId()).orElse(null);
+
+        if (newLike == null) {
+            like = new Like();
+            like.setPost(post);
+            like.setUser(user);
+            likeRepo.save(like);
+        }else{
+            likeRepo.delete(like);
+        }
     }
     
 }
