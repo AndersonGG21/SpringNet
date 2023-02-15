@@ -3,13 +3,21 @@ package com.springnet.springnet.services;
 import java.util.ArrayList;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Example;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.HttpStatusCode;
+import org.springframework.http.ResponseEntity;
+import org.springframework.http.server.reactive.HttpHandler;
 import org.springframework.stereotype.Service;
+
+import com.springnet.springnet.models.Comment;
 import com.springnet.springnet.models.Follow;
 import com.springnet.springnet.models.Like;
 import com.springnet.springnet.models.Post;
-import com.springnet.springnet.models.User;
+// import com.springnet.springnet.models.User;
 import com.springnet.springnet.repositories.PostRepository;
-import com.springnet.springnet.repositories.UserRepository;
+// import com.springnet.springnet.repositories.UserRepository;
+import com.springnet.springnet.repositories.CommentRepository;
 import com.springnet.springnet.repositories.FollowRepository;
 import com.springnet.springnet.repositories.LikeRepository;
 
@@ -23,7 +31,7 @@ public class PostServiceImpl implements PostService{
     private PostRepository postRepo;
 
     @Autowired
-    private UserRepository userRepo;
+    private CommentRepository commentRepo;
 
     @Autowired
     private LikeRepository likeRepo;
@@ -57,6 +65,15 @@ public class PostServiceImpl implements PostService{
         }else{
             likeRepo.delete(newLike);
         }
+    }
+
+    @Override
+    public void comment(Comment comment) {
+        commentRepo.save(comment);
+    }
+
+    public Long countSameComment(Comment comment){
+        return commentRepo.count(Example.of(comment));
     }
     
 }
