@@ -41,7 +41,7 @@ public class PostController {
 
     @PostMapping("/comment")
     public ResponseEntity<String> commentPost(@RequestBody Comment comment){
-        if (postService.countSameComment(comment) > 2 ) {
+        if (postService.countSameComment(comment) >= 2 ) {
             return new ResponseEntity<>("Ya has hecho este comentario", HttpStatus.OK);
         }
 
