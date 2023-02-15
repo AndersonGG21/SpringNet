@@ -1,5 +1,8 @@
 package com.springnet.springnet.services;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -69,6 +72,11 @@ public class PostServiceImpl implements PostService{
 
     @Override
     public void comment(Comment comment) {
+        LocalDate date = LocalDate.now();
+        LocalTime time = LocalTime.now();
+
+        LocalDateTime dateTime = LocalDateTime.of(date, time);
+        comment.setDate(dateTime);
         commentRepo.save(comment);
     }
 
