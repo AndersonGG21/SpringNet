@@ -1,15 +1,26 @@
 package com.springnet.springnet.services;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Example;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.HttpStatusCode;
+import org.springframework.http.ResponseEntity;
+import org.springframework.http.server.reactive.HttpHandler;
 import org.springframework.stereotype.Service;
+
+import com.springnet.springnet.models.Comment;
 import com.springnet.springnet.models.Follow;
 import com.springnet.springnet.models.Like;
 import com.springnet.springnet.models.Post;
-import com.springnet.springnet.models.User;
+// import com.springnet.springnet.models.User;
 import com.springnet.springnet.repositories.PostRepository;
-import com.springnet.springnet.repositories.UserRepository;
+// import com.springnet.springnet.repositories.UserRepository;
+import com.springnet.springnet.repositories.CommentRepository;
 import com.springnet.springnet.repositories.FollowRepository;
 import com.springnet.springnet.repositories.LikeRepository;
 
@@ -23,7 +34,7 @@ public class PostServiceImpl implements PostService{
     private PostRepository postRepo;
 
     @Autowired
-    private UserRepository userRepo;
+    private CommentRepository commentRepo;
 
     @Autowired
     private LikeRepository likeRepo;
@@ -50,17 +61,27 @@ public class PostServiceImpl implements PostService{
 
     @Override
     public void likepost(Like like) {
-        System.out.println(like.toString());
-        // Post post = postRepo.findById(like.getPost().getId()).orElse(null);
-        // User user = userRepo.findById(like.getUser().getId()).orElse(null);
-        
-        Like newLike = likeRepo.findByPostAndUser(like.getPost(), like.getUser());
 
+        Like newLike = likeRepo.findByPostAndUser(like.getPost(), like.getUser());
         if (newLike == null) {
             likeRepo.save(like);
         }else{
-            likeRepo.delete(like);
+            likeRepo.delete(newLike);
         }
+    }
+
+    @Override
+    public void comment(Comment comment) {
+        LocalDate date = LocalDate.now();
+        LocalTime time = LocalTime.now();
+
+        LocalDateTime dateTime = LocalDateTime.of(date, time);
+        comment.setDate(dateTime);
+        commentRepo.save(comment);
+    }
+
+    public Long countSameComment(Comment comment){
+        return commentRepo.count(Example.of(comment));
     }
     
 }
