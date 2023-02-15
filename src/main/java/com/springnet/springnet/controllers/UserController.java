@@ -3,7 +3,6 @@ package com.springnet.springnet.controllers;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.springnet.springnet.models.User;
@@ -16,9 +15,9 @@ public class UserController {
     @Autowired
     private UserServiceImpl userService;
 
-    @GetMapping("/{id}")
-    public User getUserProfile(@RequestParam Long id){
-        return userService.getUserProfile(id);
+    @GetMapping("/{userId}")
+    public User getUserProfile(@PathVariable Long userId){
+        return userService.getUserProfile(userId);
     }
     
     @PostMapping("/new-user")
