@@ -3,6 +3,8 @@ package com.springnet.springnet.controllers;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -10,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.springnet.springnet.models.Comment;
 import com.springnet.springnet.models.Like;
 import com.springnet.springnet.models.Post;
 import com.springnet.springnet.services.PostServiceImpl;
@@ -34,6 +37,17 @@ public class PostController {
     @PostMapping("/like")
     public void likePost(@RequestBody Like like){
         postService.likepost(like);
+    }
+
+    @PostMapping("/comment")
+    public ResponseEntity<String> commentPost(@RequestBody Comment comment){
+        if (postService.countSameComment(comment) > 2 ) {
+            return new ResponseEntity<>("Ya has hecho este comentario", HttpStatus.OK);
+        }
+
+        postService.comment(comment);
+
+        return new ResponseEntity<>("Ok", HttpStatus.OK);
     }
 
 }
