@@ -36,7 +36,7 @@ public class WebSecurityConfig {
         InMemoryUserDetailsManager manager = new InMemoryUserDetailsManager();
         manager.createUser(
             User.withUsername("admin")
-            .password("admin")
+            .password(passwordEncoder().encode("admin"))
             .roles()
             .build()
         );
