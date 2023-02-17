@@ -14,7 +14,7 @@ import io.jsonwebtoken.security.Keys;
 
 public class TokenUtils {
 
-    private final static String ACCESS_TOKEN_SECRET = "4hauh1uy23y13h13123aksk";
+    private final static String ACCESS_TOKEN_SECRET = "4hauh1uy23y13h13123akskasjkajskajskajskajskajskajskajsljkjj1k1j2k1";
     private final static Long ACCESS_TOKE_VALIDTY_SECODNS = 2_592_000L;
 
     public static String createToken(String name, String email) {
