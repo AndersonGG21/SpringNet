@@ -28,4 +28,17 @@ public class WebSecurityConfig {
         .sessionCreationPolicy(SessionCreationPolicy.STATELESS).and().build();
     }
 
+
+    @Bean
+    UserDetailsService userDetailsService(){
+        InMemoryUserDetailsManager manager = new InMemoryUserDetailsManager();
+        manager.createUser(
+            User.withUsername("admin")
+            .password("admin")
+            .roles()
+            .build()
+        );
+
+        return manager;
+    }
 }
