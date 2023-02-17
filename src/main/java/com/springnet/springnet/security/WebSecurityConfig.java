@@ -32,6 +32,7 @@ public class WebSecurityConfig {
 
         return http.csrf()
                 .disable()
+                .authorizeHttpRequests(authorize -> authorize.requestMatchers("/api/users/new-user").permitAll())
                 .authorizeHttpRequests()
                 .anyRequest()
                 .authenticated()
