@@ -24,6 +24,7 @@ public class PostController {
     @Autowired
     private PostServiceImpl postService;
 
+
     @GetMapping("/{userId}")
     public List<Post> getPostByFollowing(@PathVariable Long userId){
         return postService.findPostByFollowing(userId);

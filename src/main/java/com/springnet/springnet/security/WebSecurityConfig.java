@@ -1,5 +1,7 @@
 package com.springnet.springnet.security;
 
+import java.util.Arrays;
+
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -11,14 +13,20 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.cors.CorsConfiguration;
+import org.springframework.web.cors.CorsConfigurationSource;
+import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
+import org.springframework.web.servlet.config.annotation.CorsRegistry;
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 import lombok.AllArgsConstructor;
 
 @Configuration
 @AllArgsConstructor
+@CrossOrigin(origins = "*")
 public class WebSecurityConfig {
 
-    
     private final UserDetailsService userDetailsService;
     // private final JWTAuthorizationFilter jwtAuthorizationFilter;
 
@@ -30,8 +38,10 @@ public class WebSecurityConfig {
         jwtAuthenticationFilter.setFilterProcessesUrl("/login");
         JWTAuthorizationFilter jwtAuthorizationFilter = new JWTAuthorizationFilter();
 
-        return http.csrf()
+        return http.cors().and()
+                .csrf()
                 .disable()
+                .authorizeHttpRequests(authorize -> authorize.requestMatchers("/api/users/new-user").permitAll())
                 .authorizeHttpRequests()
                 .anyRequest()
                 .authenticated()
@@ -45,7 +55,6 @@ public class WebSecurityConfig {
                 .addFilterBefore(jwtAuthorizationFilter, UsernamePasswordAuthenticationFilter.class)
                 .build();
     }
-
 
     @Bean
     AuthenticationManager authenticationManager(HttpSecurity http) throws Exception {
@@ -62,7 +71,28 @@ public class WebSecurityConfig {
         return new BCryptPasswordEncoder();
     }
 
-    public static void main(String[] args) {
-        System.out.println(new BCryptPasswordEncoder().encode("admin"));
+    @Bean
+    public WebMvcConfigurer corsConfigurer() {
+        return new WebMvcConfigurer() {
+            @Override
+            public void addCorsMappings(CorsRegistry registry) {
+                registry.addMapping("/login").allowedOrigins("http://localhost:4200").allowedHeaders("*");
+            }
+        };
     }
+
+    @Bean
+    public CorsConfigurationSource corsConfigurationSource() {
+        CorsConfiguration configuration = new CorsConfiguration();
+        configuration.setAllowedOrigins(Arrays.asList("*"));
+        configuration.setAllowedMethods(Arrays.asList("GET", "POST", "OPTIONS"));
+        configuration.setAllowedHeaders(Arrays.asList("*"));
+        configuration.setExposedHeaders(Arrays.asList("Authorization"));
+        UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
+        source.registerCorsConfiguration("/**", configuration);
+        return source;
+    }
+    // public static void main(String[] args) {
+    // System.out.println(new BCryptPasswordEncoder().encode("admin"));
+    // }
 }
