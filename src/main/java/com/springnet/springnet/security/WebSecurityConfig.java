@@ -77,6 +77,7 @@ public class WebSecurityConfig {
             @Override
             public void addCorsMappings(CorsRegistry registry) {
                 registry.addMapping("/login").allowedOrigins("http://localhost:4200").allowedHeaders("*");
+                registry.addMapping("/media/**").allowedOrigins("http://localhost:4200").allowedHeaders("*");
             }
         };
     }
