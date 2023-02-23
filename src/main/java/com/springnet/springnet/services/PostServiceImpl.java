@@ -52,6 +52,10 @@ public class PostServiceImpl implements PostService{
 
     @Override
     public void createPost(Post post) {
+        LocalDate date = LocalDate.now();
+        LocalTime time = LocalTime.now();
+
+        post.setPublicationDate(LocalDateTime.of(date, time));
         postRepo.save(post);
     }
 
