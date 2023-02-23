@@ -1,11 +1,13 @@
 package com.springnet.springnet.services;
 
+import java.io.IOException;
+
+import org.springframework.core.io.Resource;
 import org.springframework.web.multipart.MultipartFile;
 
-import jakarta.annotation.Resource;
 
 public interface StorageService {
-    void init();
+    void init() throws IOException;
 
     String store(MultipartFile file);
     Resource loadAsResource(String fileName);
