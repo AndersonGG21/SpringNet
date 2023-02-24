@@ -96,7 +96,7 @@ public class WebSecurityConfig {
     }
 
     @Bean
-    public WebSecurityCustomizer webSecurityCustomizer() {
+    public WebSecurityCustomizer webSecurityCustomizer1() {
         return (web) -> web.ignoring()
             .requestMatchers("/**");
     }
