@@ -100,7 +100,5 @@ public class WebSecurityConfig {
         return (web) -> web.ignoring()
             .requestMatchers("/**");
     }
-    // public static void main(String[] args) {
-    // System.out.println(new BCryptPasswordEncoder().encode("admin"));
-    // }
+    
 }
