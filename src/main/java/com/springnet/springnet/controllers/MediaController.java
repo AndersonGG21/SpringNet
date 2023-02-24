@@ -41,7 +41,7 @@ public class MediaController {
     public ResponseEntity<Resource> getFile(@PathVariable String filename) throws IOException{
         Resource file = storageService.loadAsResource(filename);
         String contentType = Files.probeContentType(file.getFile().toPath());
-        
+    
         return ResponseEntity.ok().header(HttpHeaders.CONTENT_TYPE, contentType).body(file);
 
     }
