@@ -83,5 +83,10 @@ public class PostServiceImpl implements PostService{
     public Long countSameComment(Comment comment){
         return commentRepo.count(Example.of(comment));
     }
+
+    @Override
+    public List<Post> findPostByUser(Long userId) {
+        return postRepo.findByUserId(userId);
+    }
     
 }
