@@ -11,5 +11,6 @@ public interface PostService {
     void createPost(Post post);
     void likepost(Like like);
     void comment(Comment comment);
+    List<Post> findPostByUser(Long userId);
     
 }
