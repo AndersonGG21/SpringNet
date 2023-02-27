@@ -51,4 +51,9 @@ public class PostController {
         return new ResponseEntity<>("Ok", HttpStatus.OK);
     }
 
+    @GetMapping("/user-posts/{user}")
+    public List<Post> getUserPost(@PathVariable Long user){
+        return postService.findPostByUser(user);
+    }
+
 }
