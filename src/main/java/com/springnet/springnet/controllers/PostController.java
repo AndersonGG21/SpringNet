@@ -56,9 +56,4 @@ public class PostController {
         return postService.findPostByUser(user);
     }
 
-    @GetMapping("/user/followers")
-    public List<Object> getUserFollowers(){
-        return null;
-    }
-
 }
