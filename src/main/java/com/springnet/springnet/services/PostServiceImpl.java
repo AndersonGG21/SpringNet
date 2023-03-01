@@ -13,12 +13,7 @@ import com.springnet.springnet.models.Comment;
 import com.springnet.springnet.models.Follow;
 import com.springnet.springnet.models.Like;
 import com.springnet.springnet.models.Post;
-// import com.springnet.springnet.models.User;
 import com.springnet.springnet.repositories.PostRepository;
-
-import jakarta.persistence.EntityManager;
-
-// import com.springnet.springnet.repositories.UserRepository;
 import com.springnet.springnet.repositories.CommentRepository;
 import com.springnet.springnet.repositories.FollowRepository;
 import com.springnet.springnet.repositories.LikeRepository;
@@ -37,11 +32,6 @@ public class PostServiceImpl implements PostService{
 
     @Autowired
     private LikeRepository likeRepo;
-
-    @Autowired
-    private EntityManager entityManager;
-
-
 
     @Override
     public List<Post> findPostByFollowing(Long userId) {
@@ -89,11 +79,6 @@ public class PostServiceImpl implements PostService{
     public Long countSameComment(Comment comment){
         return commentRepo.count(Example.of(comment));
     }
-
-    public Long countFollowers(){
-        return (Long) entityManager.createNativeQuery("SELECT COUNT(follower_id) FROM `follow` WHERE following_id = 12").getSingleResult();
-    }
-
 
     @Override
     public List<Post> findPostByUser(Long userId) {
