@@ -18,4 +18,9 @@ public class FollowController {
     public Long getCountOfFollowers(){
         return followService.getCountOfFollowers();
     }
+
+    @GetMapping("/count-following")
+    public Long getCountOfFollowing(){
+        return followService.getCountOfFollowing();
+    }
 }
