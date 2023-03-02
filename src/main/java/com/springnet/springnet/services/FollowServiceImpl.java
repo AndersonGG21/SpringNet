@@ -18,8 +18,7 @@ public class FollowServiceImpl implements FollowService{
 
     @Override
     public Long getCountOfFollowing() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'getCountOfFollowing'");
+        return (Long) em.createNativeQuery("SELECT COUNT(following_id) FROM `follow` WHERE follower_id = 12").getSingleResult();
     }
     
 }
