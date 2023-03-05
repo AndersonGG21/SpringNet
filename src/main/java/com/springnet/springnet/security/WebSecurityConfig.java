@@ -14,6 +14,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
@@ -40,9 +41,10 @@ public class WebSecurityConfig {
         JWTAuthorizationFilter jwtAuthorizationFilter = new JWTAuthorizationFilter();
 
         return http.cors().and()
-                .csrf()
+                .csrf().ignoringRequestMatchers("/login")
                 .disable()
                 .authorizeHttpRequests(authorize -> authorize.requestMatchers("/api/users/new-user").permitAll())
+                .authorizeHttpRequests(authorize -> authorize.requestMatchers("/login").permitAll())
                 .authorizeHttpRequests()
                 .anyRequest()
                 .authenticated()
@@ -97,8 +99,9 @@ public class WebSecurityConfig {
 
     @Bean
     public WebSecurityCustomizer webSecurityCustomizer1() {
-        return (web) -> web.ignoring()
-            .requestMatchers("/**");
+        return web -> web.ignoring().requestMatchers(
+                       new AntPathRequestMatcher("/media/**")
+                    );
     }
     
 }
