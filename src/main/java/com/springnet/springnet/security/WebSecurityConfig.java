@@ -100,7 +100,7 @@ public class WebSecurityConfig {
     @Bean
     public WebSecurityCustomizer webSecurityCustomizer1() {
         return web -> web.ignoring().requestMatchers(
-                       new AntPathRequestMatcher("/media/**")
+                       new AntPathRequestMatcher("/media/{filname:.+}")
                     );
     }
     
