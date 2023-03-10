@@ -1,5 +1,6 @@
 package com.springnet.springnet.controllers;
 
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -10,6 +11,7 @@ import com.springnet.springnet.services.UserServiceImpl;
 
 @RestController
 @RequestMapping("/api/users")
+@CrossOrigin(origins = "*")
 public class UserController {
     
     @Autowired
@@ -24,4 +26,9 @@ public class UserController {
     public void createUser(@RequestBody User newUser){
         userService.createUser(newUser);
     }    
+
+    @GetMapping("/by-email/{email}")
+    public User getOneByEmail(@PathVariable String email){
+        return userService.getOneByEmail(email);
+    }
 }
