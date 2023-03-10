@@ -31,5 +31,10 @@ public class UserServiceImpl implements UserService{
         user.setPassword(new BCryptPasswordEncoder().encode(user.getPassword()));
         userRepo.save(user);
     }
+
+    @Override
+    public User getOneByEmail(String email) {
+        return userRepo.findOneByEmail(email).orElse(null);
+    }
     
 }
