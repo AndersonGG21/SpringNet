@@ -12,5 +12,4 @@ public interface PostService {
     void likepost(Like like);
     void comment(Comment comment);
     List<Post> findPostByUser(Long userId);
-    
 }

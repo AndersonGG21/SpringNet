@@ -5,6 +5,7 @@ import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Example;
 import org.springframework.stereotype.Service;
@@ -57,13 +58,15 @@ public class PostServiceImpl implements PostService{
 
     @Override
     public void likepost(Like like) {
-
         Like newLike = likeRepo.findByPostAndUser(like.getPost(), like.getUser());
+        System.out.println(newLike);
+
         if (newLike == null) {
             likeRepo.save(like);
         }else{
             likeRepo.delete(newLike);
         }
+
     }
 
     @Override
@@ -80,9 +83,12 @@ public class PostServiceImpl implements PostService{
         return commentRepo.count(Example.of(comment));
     }
 
+    public Long countLike(Like like){
+        return likeRepo.count(Example.of(like));
+    }
+
     @Override
     public List<Post> findPostByUser(Long userId) {
         return postRepo.findByUserId(userId);
-    }
-    
+    }    
 }
