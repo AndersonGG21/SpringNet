@@ -56,4 +56,8 @@ public class PostController {
         return postService.findPostByUser(user);
     }
 
+    @PostMapping("/liked")
+    public Long checkLike(@RequestBody Like like){
+        return postService.countLike(like);
+    }
 }
