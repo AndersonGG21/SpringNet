@@ -30,7 +30,6 @@ import lombok.AllArgsConstructor;
 public class WebSecurityConfig {
 
     private final UserDetailsService userDetailsService;
-    // private final JWTAuthorizationFilter jwtAuthorizationFilter;
 
     @Bean
     SecurityFilterChain filterChain(HttpSecurity http, AuthenticationManager authManager) throws Exception {
@@ -100,8 +99,7 @@ public class WebSecurityConfig {
     @Bean
     public WebSecurityCustomizer webSecurityCustomizer1() {
         return web -> web.ignoring().requestMatchers(
-                       new AntPathRequestMatcher("/media/{filname:.+}")
-                    );
+                new AntPathRequestMatcher("/media/{filname:.+}"));
     }
-    
+
 }
