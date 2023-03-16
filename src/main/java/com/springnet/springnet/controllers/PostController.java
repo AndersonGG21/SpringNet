@@ -60,4 +60,9 @@ public class PostController {
     public Long checkLike(@RequestBody Like like){
         return postService.countLike(like);
     }
+    
+    @GetMapping("/{postId}/comments")
+    public List<Comment> getComments(@PathVariable Long postId){
+        return postService.findCommentByPostId(postId);
+    }
 }

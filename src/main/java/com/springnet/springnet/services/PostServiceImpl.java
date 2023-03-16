@@ -90,5 +90,10 @@ public class PostServiceImpl implements PostService{
     @Override
     public List<Post> findPostByUser(Long userId) {
         return postRepo.findByUserId(userId);
+    }
+
+    @Override
+    public List<Comment> findCommentByPostId(Long postId) {
+        return commentRepo.findByPostId(postId);
     }    
 }
