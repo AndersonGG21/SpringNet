@@ -3,8 +3,6 @@ package com.springnet.springnet.controllers;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -41,14 +39,8 @@ public class PostController {
     }
 
     @PostMapping("/comment")
-    public ResponseEntity<String> commentPost(@RequestBody Comment comment){
-        if (postService.countSameComment(comment) >= 1 ) {
-            return new ResponseEntity<>("Ya has hecho este comentario", HttpStatus.OK);
-        }
-
+    public void commentPost(@RequestBody Comment comment){
         postService.comment(comment);
-
-        return new ResponseEntity<>("Ok", HttpStatus.OK);
     }
 
     @GetMapping("/user-posts/{user}")
@@ -64,5 +56,10 @@ public class PostController {
     @GetMapping("/{postId}/comments")
     public List<Comment> getComments(@PathVariable Long postId){
         return postService.findCommentByPostId(postId);
+    }
+
+    @GetMapping("/{postId}/likes")
+    public Long getPostLikes(@PathVariable Long postId){
+        return postService.countLikes(postId);
     }
 }

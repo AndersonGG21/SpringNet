@@ -15,6 +15,9 @@ import com.springnet.springnet.models.Follow;
 import com.springnet.springnet.models.Like;
 import com.springnet.springnet.models.Post;
 import com.springnet.springnet.repositories.PostRepository;
+
+import jakarta.persistence.EntityManager;
+
 import com.springnet.springnet.repositories.CommentRepository;
 import com.springnet.springnet.repositories.FollowRepository;
 import com.springnet.springnet.repositories.LikeRepository;
@@ -33,6 +36,9 @@ public class PostServiceImpl implements PostService{
 
     @Autowired
     private LikeRepository likeRepo;
+
+    @Autowired 
+    private EntityManager em;
 
     @Override
     public List<Post> findPostByFollowing(Long userId) {
@@ -85,6 +91,11 @@ public class PostServiceImpl implements PostService{
 
     public Long countLike(Like like){
         return likeRepo.count(Example.of(like));
+    }
+
+    public Long countLikes(Long postId) {
+        String sqlQuery = "SELECT COUNT(post_id) FROM `likes` WHERE post_id = ?";
+        return (Long) em.createNativeQuery(sqlQuery).setParameter(1,postId).getSingleResult();
     }
 
     @Override
