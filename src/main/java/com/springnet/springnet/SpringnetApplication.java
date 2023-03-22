@@ -8,7 +8,7 @@ public class SpringnetApplication {
 
 	public static void main(String[] args) {
 		SpringApplication.run(SpringnetApplication.class, args);
-		System.out.println("SpringNet works!");
+		System.out.println("SpringNet works! SUWI");
 	}
 
 }
