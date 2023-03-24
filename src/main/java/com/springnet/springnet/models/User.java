@@ -33,4 +33,7 @@ public class User {
 
     @Column(name = "description")
     private String description;
+
+    @Column(name = "user_img")
+    private String profileImg;
 }
