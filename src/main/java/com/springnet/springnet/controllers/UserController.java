@@ -1,6 +1,8 @@
 package com.springnet.springnet.controllers;
 
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -30,5 +32,10 @@ public class UserController {
     @GetMapping("/by-email/{email}")
     public User getOneByEmail(@PathVariable String email){
         return userService.getOneByEmail(email);
+    }
+
+    @GetMapping("")
+    public List<User> getAllUsers(){
+        return userService.getAllUsers();
     }
 }
