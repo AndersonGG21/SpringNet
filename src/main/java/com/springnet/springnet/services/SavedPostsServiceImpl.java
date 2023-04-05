@@ -18,9 +18,10 @@ public class SavedPostsServiceImpl implements SavedPostsService{
 
     @Override
     public void savePost(SavedPosts post) {
-
+        
         if (savedRepository.exists(Example.of(post))) {
-            savedRepository.delete(post);
+            SavedPosts postToSave = savedRepository.findOne(Example.of(post)).orElse(null);
+            savedRepository.delete(postToSave);
         }else{
             savedRepository.save(post);
         }
