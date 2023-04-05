@@ -29,4 +29,9 @@ public class SavedPostsController {
     public void savePost(@RequestBody SavedPosts post){
         savedPostsService.savePost(post);
     }
+
+    @PostMapping("check")
+    public boolean checkIfSaved(@RequestBody SavedPosts post){
+        return savedPostsService.checkIfSaved(post);
+    }
 }
