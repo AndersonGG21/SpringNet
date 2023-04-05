@@ -32,5 +32,10 @@ public class SavedPostsServiceImpl implements SavedPostsService{
     public List<SavedPosts> getSavedPostsByUserId(Long userId) {
         return savedRepository.findAllByUserId(userId);
     }
+
+    @Override
+    public boolean checkIfSaved(SavedPosts post) {
+        return savedRepository.exists(Example.of(post));
+    }
     
 }
