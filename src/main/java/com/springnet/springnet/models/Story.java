@@ -12,9 +12,11 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
+import lombok.Data;
 
 @Entity
 @Table(name = "stories")
+@Data
 public class Story {
     
     @Id
@@ -25,6 +27,9 @@ public class Story {
     @JoinColumn(name = "user_id")
     private User user;
 
+    @ManyToOne
+    private Follow follow;
+
     @Column(name = "media_url")
     private String media;
 
@@ -33,6 +38,4 @@ public class Story {
 
     @OneToMany(mappedBy = "story", cascade = CascadeType.ALL)
     private List<StoryView> views;
-
-    
 }
