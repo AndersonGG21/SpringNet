@@ -28,14 +28,14 @@ public class Story {
     private User user;
 
     @ManyToOne
-    private Follow follow;
+    private Follow relation;
 
     @Column(name = "media_url")
     private String media;
 
-    @Column(name = "duration")
-    private int duration;
+    // @Column(name = "duration")
+    // private int duration;
 
-    @OneToMany(mappedBy = "story", cascade = CascadeType.ALL)
-    private List<StoryView> views;
+    // @OneToMany(mappedBy = "story", cascade = CascadeType.ALL)
+    // private List<StoryView> views;
 }
