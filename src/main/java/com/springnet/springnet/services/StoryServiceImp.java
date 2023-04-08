@@ -17,12 +17,12 @@ import com.springnet.springnet.repositories.StoryRepository;
 import com.springnet.springnet.repositories.StoryViewRepository;
 
 @Service
-public class StoryServiceImp implements StoryService{
+public class StoryServiceImp implements StoryService {
 
     @Autowired
     private StoryRepository storyRepository;
 
-    @Autowired 
+    @Autowired
     private StoryViewRepository storyViewRepository;
 
     @Autowired
@@ -30,8 +30,9 @@ public class StoryServiceImp implements StoryService{
 
     @Override
     public void createStory(Story story) {
-        Follow followToSave = followRepository.findOne(Example.of(story.getFollow())).orElse(null);
-        story.setFollow(followToSave);
+        Follow followToSave =
+        followRepository.findOne(Example.of(story.getRelation())).orElse(null);
+        story.setRelation(followToSave);
         storyRepository.save(story);
     }
 
@@ -51,12 +52,13 @@ public class StoryServiceImp implements StoryService{
 
     @Override
     public List<Story> getStoriesByUserIdAndNotViewed(Long userId) {
-        List<Story> stories = storyRepository.findByFollowFollowerId(userId);
+        List<Story> stories = storyRepository.findByRelationFollowerId(userId);
         List<StoryView> views = storyViewRepository.findByUserId(userId);
-        // List<Long> followingsIds = followRepository.findFollowingIdsByFollower(userId);
-        Set<Long> viewedStories = views.stream().map(StoryView::getId).collect(Collectors.toSet());
+        Set<Story> viewedStories = views.stream().map(StoryView::getStory).collect(Collectors.toSet());
+        System.out.println(viewedStories);
+        return stories.stream().filter(story -> !viewedStories.contains(story))
+                .collect(Collectors.toList());
 
-        return stories.stream().filter(story -> !viewedStories.contains(story.getFollow().getFollower().getId())).collect(Collectors.toList());
     }
 
     @Override
@@ -66,5 +68,5 @@ public class StoryServiceImp implements StoryService{
         storyView.setStory(story);
         storyViewRepository.save(storyView);
     }
-    
+
 }

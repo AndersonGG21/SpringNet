@@ -11,6 +11,7 @@ import com.springnet.springnet.models.Story;
 public interface StoryRepository extends JpaRepository<Story, Long >{
     // List<Story> findByUserId(Long userId);
 
-    @Query("SELECT s FROM Story s WHERE s.follow.follower.id = :followerId")
-    List<Story> findByFollowFollowerId(@Param("followerId") Long followerId);
+    @Query("SELECT s FROM Story s JOIN FETCH s.follow f WHERE f.follower.id = :followerId")
+    List<Story> findByRelationFollowerId(@Param("followerId") Long followerId);
+
 }
