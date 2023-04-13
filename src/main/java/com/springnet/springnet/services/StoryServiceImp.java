@@ -55,7 +55,6 @@ public class StoryServiceImp implements StoryService {
         List<Story> stories = storyRepository.findByRelationFollowerId(userId);
         List<StoryView> views = storyViewRepository.findByUserId(userId);
         Set<Story> viewedStories = views.stream().map(StoryView::getStory).collect(Collectors.toSet());
-        System.out.println(viewedStories);
         return stories.stream().filter(story -> !viewedStories.contains(story))
                 .collect(Collectors.toList());
 
