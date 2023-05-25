@@ -3,10 +3,7 @@ package com.springnet.springnet.controllers;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import com.springnet.springnet.models.Story;
 import com.springnet.springnet.services.StoryService;
@@ -21,5 +18,9 @@ public class StoryController {
     @GetMapping("/{userId}")
     public List<Story> getStoriesByUserIdAndNotViewed(@PathVariable Long userId){
         return storyService.getStoriesByUserIdAndNotViewed(userId);
+    }
+    @PostMapping("/new-story")
+    public void addStory(@RequestBody Story story) {
+        storyService.createStory(story);
     }
 }
