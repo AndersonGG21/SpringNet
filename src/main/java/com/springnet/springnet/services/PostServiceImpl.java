@@ -25,20 +25,23 @@ import com.springnet.springnet.repositories.LikeRepository;
 @Service
 public class PostServiceImpl implements PostService{
 
-    @Autowired
-    private FollowRepository followRepo;
+    private final FollowRepository followRepo;
 
-    @Autowired
-    private PostRepository postRepo;
+    private final PostRepository postRepo;
 
-    @Autowired
-    private CommentRepository commentRepo;
+    private final CommentRepository commentRepo;
 
-    @Autowired
-    private LikeRepository likeRepo;
+    private final LikeRepository likeRepo;
 
-    @Autowired 
-    private EntityManager em;
+    private final EntityManager em;
+
+    public PostServiceImpl(FollowRepository followRepo, PostRepository postRepo, CommentRepository commentRepo, LikeRepository likeRepo, EntityManager em) {
+        this.followRepo = followRepo;
+        this.postRepo = postRepo;
+        this.commentRepo = commentRepo;
+        this.likeRepo = likeRepo;
+        this.em = em;
+    }
 
     @Override
     public List<Post> findPostByFollowing(Long userId) {
