@@ -44,6 +44,7 @@ public class WebSecurityConfig {
                 .disable()
                 .authorizeHttpRequests(authorize -> authorize.requestMatchers("/api/users/new-user").permitAll())
                 .authorizeHttpRequests(authorize -> authorize.requestMatchers("/login").permitAll())
+                .authorizeHttpRequests(authorize -> authorize.requestMatchers("/api/users/by-email/**").permitAll())
                 .authorizeHttpRequests()
                 .anyRequest()
                 .authenticated()
