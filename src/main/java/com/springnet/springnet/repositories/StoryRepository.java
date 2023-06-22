@@ -14,4 +14,5 @@ public interface StoryRepository extends JpaRepository<Story, Long >{
     @Query("SELECT s FROM Story s JOIN FETCH s.follow f WHERE f.follower.id = :followerId")
     List<Story> findByRelationFollowerId(@Param("followerId") Long followerId);
 
+    List<Story> findByUserId(Long userId);
 }
