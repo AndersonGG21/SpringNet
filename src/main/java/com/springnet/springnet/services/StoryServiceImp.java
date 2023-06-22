@@ -2,38 +2,27 @@ package com.springnet.springnet.services;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Set;
-import java.util.stream.Collectors;
-
 import com.springnet.springnet.models.*;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Example;
 import org.springframework.stereotype.Service;
 
 import com.springnet.springnet.repositories.FollowRepository;
 import com.springnet.springnet.repositories.StoryRepository;
-import com.springnet.springnet.repositories.StoryViewRepository;
+
 
 @Service
 public class StoryServiceImp implements StoryService {
 
     private final StoryRepository storyRepository;
 
-    private final StoryViewRepository storyViewRepository;
-
     private final FollowRepository followRepository;
 
-    public StoryServiceImp(StoryRepository storyRepository, StoryViewRepository storyViewRepository, FollowRepository followRepository) {
+    public StoryServiceImp(StoryRepository storyRepository, FollowRepository followRepository) {
         this.storyRepository = storyRepository;
-        this.storyViewRepository = storyViewRepository;
         this.followRepository = followRepository;
     }
 
     @Override
     public void createStory(Story story) {
-        Follow followToSave =
-        followRepository.findOne(Example.of(story.getRelation())).orElse(null);
-        story.setRelation(followToSave);
         storyRepository.save(story);
     }
 
@@ -51,7 +40,7 @@ public class StoryServiceImp implements StoryService {
         return false;
     }
 
-    @Override
+   /* @Override
     public List<Story> getStoriesByUserIdAndNotViewed(Long userId) {
         List<Story> stories = storyRepository.findByRelationFollowerId(userId);
         List<StoryView> views = storyViewRepository.findByUserId(userId);
@@ -59,7 +48,7 @@ public class StoryServiceImp implements StoryService {
         return stories.stream().filter(story -> !viewedStories.contains(story))
                 .collect(Collectors.toList());
 
-    }
+    }*/
 
     @Override
     public List<Story> getStoriesByFollowing(Long userId) {
