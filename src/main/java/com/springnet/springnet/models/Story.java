@@ -23,9 +23,6 @@ public class Story {
     @JoinColumn(name = "user_id")
     private User user;
 
-    @ManyToOne
-    private Follow relation;
-
     @Column(name = "media_url")
     private String media;
 
