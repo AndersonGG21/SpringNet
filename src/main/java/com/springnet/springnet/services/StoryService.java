@@ -10,5 +10,6 @@ public interface StoryService {
     Story getStoryById(Long id);
     boolean deleteStoryById(Long id);
     List<Story> getStoriesByUserIdAndNotViewed(Long userId);
-    void createStoryView(Story story, User user);
+    List<Story> getStoriesByFollowing(Long userId);
+    //List<Story> findStoriesById(Long userId);
 }
