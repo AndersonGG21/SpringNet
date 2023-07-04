@@ -45,6 +45,8 @@ public class WebSecurityConfig {
                 .authorizeHttpRequests(authorize -> authorize.requestMatchers("/api/users/new-user").permitAll())
                 .authorizeHttpRequests(authorize -> authorize.requestMatchers("/login").permitAll())
                 .authorizeHttpRequests(authorize -> authorize.requestMatchers("/api/users/by-email/**").permitAll())
+                .authorizeHttpRequests(authorize -> authorize.requestMatchers("/spring-websocket").permitAll())
+                .authorizeHttpRequests(authorize -> authorize.requestMatchers("/**").permitAll())
                 .authorizeHttpRequests()
                 .anyRequest()
                 .authenticated()
@@ -81,6 +83,7 @@ public class WebSecurityConfig {
             public void addCorsMappings(CorsRegistry registry) {
                 registry.addMapping("/**").allowedOrigins("http://localhost:4200").allowedHeaders("*");
                 registry.addMapping("/media/**").allowedOrigins("http://localhost:4200").allowedHeaders("*");
+                registry.addMapping("/spring-websocket/**").allowedOrigins("http://localhost:4200/*").allowedHeaders("*");
             }
         };
     }
@@ -100,7 +103,7 @@ public class WebSecurityConfig {
     @Bean
     public WebSecurityCustomizer webSecurityCustomizer1() {
         return web -> web.ignoring().requestMatchers(
-                new AntPathRequestMatcher("/media/{filname:.+}"));
+                new AntPathRequestMatcher("/media/{filname:.+}"), new AntPathRequestMatcher("/spring-websocket/*"));
     }
 
 }
