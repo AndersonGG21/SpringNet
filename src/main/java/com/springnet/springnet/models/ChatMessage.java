@@ -1,13 +1,17 @@
 package com.springnet.springnet.models;
 
-import lombok.Builder;
-import lombok.Data;
+import lombok.*;
+import lombok.extern.jackson.Jacksonized;
 
-@Data
+@Getter
+@Setter
+@AllArgsConstructor
+@NoArgsConstructor
 @Builder
 public class ChatMessage {
 
     private String content;
     private String sender;
+    private String sessionID;
     private MessageType type;
 }
