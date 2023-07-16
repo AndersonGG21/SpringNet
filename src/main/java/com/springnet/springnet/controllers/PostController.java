@@ -62,4 +62,9 @@ public class PostController {
     public Long getPostLikes(@PathVariable Long postId){
         return postService.countLikes(postId);
     }
+
+    @GetMapping("/liked-posts/{userId}")
+    public  List<Post> getLikedPosts(@PathVariable Long userId){
+        return postService.findLikedPostsByUserId(userId);
+    }
 }
