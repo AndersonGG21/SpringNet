@@ -1,24 +1,31 @@
 package com.springnet.springnet.services;
 
 import java.time.LocalDate;
+import java.util.List;
 
-import org.springframework.beans.factory.annotation.Autowired;
+import com.springnet.springnet.models.User;
+import jakarta.persistence.EntityManager;
+import jakarta.persistence.Query;
 import org.springframework.data.domain.Example;
 import org.springframework.stereotype.Service;
 
 import com.springnet.springnet.models.Follow;
 import com.springnet.springnet.repositories.FollowRepository;
+import org.springframework.transaction.annotation.EnableTransactionManagement;
 
-import jakarta.persistence.EntityManager;
 
 @Service
+@EnableTransactionManagement
 public class FollowServiceImpl implements FollowService{
 
-    @Autowired
-    private EntityManager em;
+    private final EntityManager em;
 
-    @Autowired
-    private FollowRepository fRepository;
+    private final FollowRepository fRepository;
+
+    public FollowServiceImpl(EntityManager em, FollowRepository fRepository) {
+        this.em = em;
+        this.fRepository = fRepository;
+    }
 
     @Override
     public Long getCountOfFollowers(Long id) {
@@ -48,7 +55,16 @@ public class FollowServiceImpl implements FollowService{
     @Override
     public void removeFollow(Follow follow) {
         Follow deleteFollow = fRepository.findOne(Example.of(follow)).orElse(null);
+        assert deleteFollow != null;
         fRepository.delete(deleteFollow);
+    }
+
+    @Override
+    public List<User> getFollowers(Long id) {
+        String hql = "SELECT f.follower FROM Follow f WHERE f.following.id = :id";
+        Query query = em.createQuery(hql);
+        query.setParameter("id", id);
+        return query.getResultList();
     }
     
 }
