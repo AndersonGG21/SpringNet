@@ -13,4 +13,5 @@ public interface PostService {
     void comment(Comment comment);
     List<Post> findPostByUser(Long userId);
     List<Comment> findCommentByPostId(Long postId);
+    List<Post> findLikedPostsByUserId(Long userId);
 }

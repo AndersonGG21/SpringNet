@@ -6,7 +6,7 @@ import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.springframework.beans.factory.annotation.Autowired;
+import jakarta.persistence.Query;
 import org.springframework.data.domain.Example;
 import org.springframework.stereotype.Service;
 
@@ -109,5 +109,13 @@ public class PostServiceImpl implements PostService{
     @Override
     public List<Comment> findCommentByPostId(Long postId) {
         return commentRepo.findByPostId(postId);
-    }    
+    }
+
+    @Override
+    public List<Post> findLikedPostsByUserId(Long userId) {
+        String sqlQuery = "SELECT l.post FROM Like l WHERE l.user.id = :userId";
+
+        Query query = em.createQuery(sqlQuery).setParameter("userId",userId);
+        return query.getResultList();
+    }
 }
