@@ -28,20 +28,6 @@ public class FollowServiceImpl implements FollowService{
     }
 
     @Override
-    public Long getCountOfFollowers(Long id) {
-        return (Long) em.createNativeQuery("SELECT COUNT(follower_id) FROM `follow` WHERE following_id = ?")
-        .setParameter(1, id)
-        .getSingleResult();
-    }
-
-    @Override
-    public Long getCountOfFollowing(Long id) {
-        return (Long) em.createNativeQuery("SELECT COUNT(following_id) FROM `follow` WHERE follower_id = ?")
-        .setParameter(1, id)
-        .getSingleResult();
-    }
-
-    @Override
     public void setFollow(Follow follow) {
         follow.setFollowDate(LocalDate.now());
         fRepository.save(follow);
@@ -62,6 +48,14 @@ public class FollowServiceImpl implements FollowService{
     @Override
     public List<User> getFollowers(Long id) {
         String hql = "SELECT f.follower FROM Follow f WHERE f.following.id = :id";
+        Query query = em.createQuery(hql);
+        query.setParameter("id", id);
+        return query.getResultList();
+    }
+
+    @Override
+    public List<User> getFollowings(Long id) {
+        String hql = "SELECT f.following FROM Follow f WHERE f.follower.id = :id";
         Query query = em.createQuery(hql);
         query.setParameter("id", id);
         return query.getResultList();
