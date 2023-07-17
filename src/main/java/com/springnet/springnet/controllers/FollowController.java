@@ -21,16 +21,6 @@ public class FollowController {
     @Autowired
     private FollowService followService;
 
-    @GetMapping("/count-followers/{id}")
-    public Long getCountOfFollowers(@PathVariable Long id){
-        return followService.getCountOfFollowers(id);
-    }
-
-    @GetMapping("/count-following/{id}")
-    public Long getCountOfFollowing(@PathVariable Long id){
-        return followService.getCountOfFollowing(id);
-    }
-
     @PostMapping("/follow-user")
     public void setFollow(@RequestBody Follow follow){
         if (followService.countFollow(follow) == 1) {
