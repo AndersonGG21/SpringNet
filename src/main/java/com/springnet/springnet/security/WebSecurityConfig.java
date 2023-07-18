@@ -46,7 +46,6 @@ public class WebSecurityConfig {
                 .authorizeHttpRequests(authorize -> authorize.requestMatchers("/login").permitAll())
                 .authorizeHttpRequests(authorize -> authorize.requestMatchers("/api/users/by-email/**").permitAll())
                 .authorizeHttpRequests(authorize -> authorize.requestMatchers("/spring-websocket").permitAll())
-                .authorizeHttpRequests(authorize -> authorize.requestMatchers("/**").permitAll())
                 .authorizeHttpRequests()
                 .anyRequest()
                 .authenticated()

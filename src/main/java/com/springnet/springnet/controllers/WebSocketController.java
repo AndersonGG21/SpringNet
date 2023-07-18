@@ -20,13 +20,6 @@ public class WebSocketController {
         this.messagingTemplate = messagingTemplate;
     }
 
-    @MessageMapping("/chat.onlineUsers")
-    //@SendTo("/topic/online")
-    public ChatMessage sendMessage(@Payload ChatMessage chatMessage) {
-        messagingTemplate.convertAndSend("/topic/online", chatMessage);
-        return chatMessage;
-    }
-
 
     @MessageMapping("/chat.sendMessageV1")
     public ChatMessage sendMessageV1(@Payload ChatMessage chatMessage) {
