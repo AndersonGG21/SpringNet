@@ -26,7 +26,7 @@ import lombok.AllArgsConstructor;
 
 @Configuration
 @AllArgsConstructor
-@CrossOrigin(origins = "*")
+@CrossOrigin(origins = {"http://springnet-angular-app.s3-website.us-east-2.amazonaws.com"})
 public class WebSecurityConfig {
 
     private final UserDetailsService userDetailsService;
@@ -80,9 +80,9 @@ public class WebSecurityConfig {
         return new WebMvcConfigurer() {
             @Override
             public void addCorsMappings(CorsRegistry registry) {
-                registry.addMapping("/**").allowedOrigins("http://localhost:4200").allowedHeaders("*");
-                registry.addMapping("/media/**").allowedOrigins("http://localhost:4200").allowedHeaders("*");
-                registry.addMapping("/spring-websocket/**").allowedOrigins("http://localhost:4200/*").allowedHeaders("*");
+                registry.addMapping("/**").allowedOrigins("http://springnet-angular-app.s3-website.us-east-2.amazonaws.com").allowedHeaders("*");
+                registry.addMapping("/media/**").allowedOrigins("http://springnet-angular-app.s3-website.us-east-2.amazonaws.com").allowedHeaders("*");
+                registry.addMapping("/spring-websocket/**").allowedOrigins("http://springnet-angular-app.s3-website.us-east-2.amazonaws.com/*").allowedHeaders("*");
             }
         };
     }
