@@ -26,7 +26,7 @@ import lombok.AllArgsConstructor;
 
 @Configuration
 @AllArgsConstructor
-@CrossOrigin(origins = {"http://springnet-angular-app.s3-website.us-east-2.amazonaws.com"})
+@CrossOrigin(origins = "*")
 public class WebSecurityConfig {
 
     private final UserDetailsService userDetailsService;
