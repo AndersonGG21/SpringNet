@@ -37,10 +37,10 @@ public class FollowController {
 
     @GetMapping("/{id}/followers")
     public List<User> getFollowers(@PathVariable Long id){
-        return followService.getFollowers(id);
+        return (List<User>) followService.getFollowers(id);
     }
     @GetMapping("/{id}/followings")
     public List<User> getFollowings(@PathVariable Long id){
-        return followService.getFollowings(id);
+        return (List<User>) followService.getFollowings(id);
     }
 }

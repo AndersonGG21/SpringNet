@@ -59,7 +59,7 @@ public class PostController {
     }
 
     @GetMapping("/{postId}/likes")
-    public Long getPostLikes(@PathVariable Long postId){
+    public int getPostLikes(@PathVariable Long postId){
         return postService.countLikes(postId);
     }
 
