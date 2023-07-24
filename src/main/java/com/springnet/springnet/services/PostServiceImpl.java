@@ -33,14 +33,12 @@ public class PostServiceImpl implements PostService{
 
     private final LikeRepository likeRepo;
 
-    private final EntityManager em;
 
-    public PostServiceImpl(FollowRepository followRepo, PostRepository postRepo, CommentRepository commentRepo, LikeRepository likeRepo, EntityManager em) {
+    public PostServiceImpl(FollowRepository followRepo, PostRepository postRepo, CommentRepository commentRepo, LikeRepository likeRepo) {
         this.followRepo = followRepo;
         this.postRepo = postRepo;
         this.commentRepo = commentRepo;
         this.likeRepo = likeRepo;
-        this.em = em;
     }
 
     @Override
@@ -96,9 +94,10 @@ public class PostServiceImpl implements PostService{
         return likeRepo.count(Example.of(like));
     }
 
-    public Long countLikes(Long postId) {
-        String sqlQuery = "SELECT COUNT(post_id) FROM `likes` WHERE post_id = ?";
-        return (Long) em.createNativeQuery(sqlQuery).setParameter(1,postId).getSingleResult();
+    public int countLikes(Long postId) {
+        //String sqlQuery = "SELECT COUNT(post_id) FROM `likes` WHERE post_id = ?";
+        //return (Long) em.createNativeQuery(sqlQuery).setParameter(1,postId).getSingleResult();
+        return likeRepo.countLikesByPostId(postId);
     }
 
     @Override
@@ -113,9 +112,9 @@ public class PostServiceImpl implements PostService{
 
     @Override
     public List<Post> findLikedPostsByUserId(Long userId) {
-        String sqlQuery = "SELECT l.post FROM Like l WHERE l.user.id = :userId";
+        //String sqlQuery = "SELECT l.post FROM Like l WHERE l.user.id = :userId";
 
-        Query query = em.createQuery(sqlQuery).setParameter("userId",userId);
-        return query.getResultList();
+        //Query query = em.createQuery(sqlQuery).setParameter("userId",userId);
+        return (List<Post>)likeRepo.findPostsLikedByUserId(userId);
     }
 }

@@ -9,6 +9,6 @@ public interface FollowService {
     void setFollow(Follow follow);
     Long countFollow(Follow follow);
     void removeFollow(Follow follow);
-    List<User> getFollowers(Long id);
-    List<User> getFollowings(Long id);
+    List<?> getFollowers(Long id);
+    List<?> getFollowings(Long id);
 }

@@ -5,7 +5,7 @@ import java.util.List;
 
 import com.springnet.springnet.models.User;
 import jakarta.persistence.EntityManager;
-import jakarta.persistence.Query;
+import jakarta.persistence.PersistenceContext;
 import org.springframework.data.domain.Example;
 import org.springframework.stereotype.Service;
 
@@ -18,12 +18,9 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 @EnableTransactionManagement
 public class FollowServiceImpl implements FollowService{
 
-    private final EntityManager em;
-
     private final FollowRepository fRepository;
 
-    public FollowServiceImpl(EntityManager em, FollowRepository fRepository) {
-        this.em = em;
+    public FollowServiceImpl(FollowRepository fRepository) {
         this.fRepository = fRepository;
     }
 
@@ -46,19 +43,19 @@ public class FollowServiceImpl implements FollowService{
     }
 
     @Override
-    public List<User> getFollowers(Long id) {
-        String hql = "SELECT f.follower FROM Follow f WHERE f.following.id = :id";
-        Query query = em.createQuery(hql);
-        query.setParameter("id", id);
-        return query.getResultList();
+    public List<?> getFollowers(Long id) {
+        //String hql = "SELECT f.follower FROM Follow f WHERE f.following.id = :id";
+        //Query query = em.createQuery(hql);
+        //query.setParameter("id", id);
+        return fRepository.findFollowersByFollowingId(id);
     }
 
     @Override
-    public List<User> getFollowings(Long id) {
-        String hql = "SELECT f.following FROM Follow f WHERE f.follower.id = :id";
-        Query query = em.createQuery(hql);
-        query.setParameter("id", id);
-        return query.getResultList();
+    public List<?> getFollowings(Long id) {
+        //String hql = "SELECT f.following FROM Follow f WHERE f.follower.id = :id";
+        //Query query = em.createQuery(hql);
+        //query.setParameter("id", id);
+        return fRepository.findFollowingByFollowerId(id);
     }
     
 }

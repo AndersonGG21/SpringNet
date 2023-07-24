@@ -28,7 +28,6 @@ public class UserServiceImpl implements UserService{
         LocalDate date = LocalDate.now();
         LocalTime time = LocalTime.now();
         user.setRegistrationDate(LocalDateTime.of(date, time));
-
         user.setPassword(new BCryptPasswordEncoder().encode(user.getPassword()));
         userRepo.save(user);
     }
