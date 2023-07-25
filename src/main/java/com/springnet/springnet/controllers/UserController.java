@@ -4,6 +4,7 @@ package com.springnet.springnet.controllers;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -24,7 +25,7 @@ public class UserController {
     }
     
     @PostMapping("/newUser")
-    public void createUser(@RequestBody User newUser){
+    public void createUser(@Validated @RequestBody User newUser){
         userService.createUser(newUser);
     }
 
