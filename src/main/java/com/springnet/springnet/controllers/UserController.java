@@ -27,7 +27,13 @@ public class UserController {
     @PostMapping("/newUser")
     public void createUser(@RequestBody User newUser){
         userService.createUser(newUser);
-    }    
+    }
+
+    @PostMapping("/new")
+    public void test(@RequestBody User user){
+        System.out.println(user.toString());
+        userService.createUser(user);
+    }
 
     @GetMapping("/by-email/{email}")
     public User getOneByEmail(@PathVariable String email){
