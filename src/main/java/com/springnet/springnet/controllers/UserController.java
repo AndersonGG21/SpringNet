@@ -13,7 +13,6 @@ import com.springnet.springnet.services.UserServiceImpl;
 
 @RestController
 @RequestMapping("/api/users")
-@CrossOrigin(origins = "*")
 public class UserController {
     
     @Autowired
@@ -27,12 +26,6 @@ public class UserController {
     @PostMapping("/newUser")
     public void createUser(@RequestBody User newUser){
         userService.createUser(newUser);
-    }
-
-    @PostMapping("/new")
-    public void test(@RequestBody User user){
-        System.out.println(user.toString());
-        userService.createUser(user);
     }
 
     @GetMapping("/by-email/{email}")
