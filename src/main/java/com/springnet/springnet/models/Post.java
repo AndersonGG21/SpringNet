@@ -15,7 +15,7 @@ public class Post {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "content")
+    @Column(name = "content", length = 2000)
     private String content;
 
     @Column(name = "image")

@@ -1,7 +1,6 @@
 package com.springnet.springnet.models;
 
 import lombok.*;
-import lombok.extern.jackson.Jacksonized;
 
 @Getter
 @Setter

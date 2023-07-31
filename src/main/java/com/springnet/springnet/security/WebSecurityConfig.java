@@ -1,6 +1,7 @@
 package com.springnet.springnet.security;
 
 import java.util.Arrays;
+import java.util.List;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -26,7 +27,10 @@ import lombok.AllArgsConstructor;
 
 @Configuration
 @AllArgsConstructor
-@CrossOrigin(origins = "http://springnet-angular-app.s3-website.us-east-2.amazonaws.com/*")
+@CrossOrigin(origins = {
+        "http://springnet-angular-app.s3-website.us-east-2.amazonaws.com/*",
+        "http://localhost:4200"
+})
 public class WebSecurityConfig {
 
     private final UserDetailsService userDetailsService;
@@ -45,7 +49,7 @@ public class WebSecurityConfig {
                 .authorizeHttpRequests(authorize -> authorize.requestMatchers("/api/users/new-user").permitAll())
                 .authorizeHttpRequests(authorize -> authorize.requestMatchers("/login").permitAll())
                 .authorizeHttpRequests(authorize -> authorize.requestMatchers("/api/users/by-email/**").permitAll())
-                .authorizeHttpRequests(authorize -> authorize.requestMatchers("/spring-websocket").permitAll())
+                .authorizeHttpRequests(authorize -> authorize.requestMatchers("/spring-websocket/**").permitAll())
                 .authorizeHttpRequests()
                 .anyRequest()
                 .authenticated()
@@ -80,9 +84,9 @@ public class WebSecurityConfig {
         return new WebMvcConfigurer() {
             @Override
             public void addCorsMappings(CorsRegistry registry) {
-                registry.addMapping("/**").allowedOrigins("http://springnet-angular-app.s3-website.us-east-2.amazonaws.com/*").allowedHeaders("*");
-                registry.addMapping("/media/**").allowedOrigins("http://springnet-angular-app.s3-website.us-east-2.amazonaws.com/*").allowedHeaders("*");
-                registry.addMapping("/spring-websocket/**").allowedOrigins("http://springnet-angular-app.s3-website.us-east-2.amazonaws.com/*").allowedHeaders("*");
+                registry.addMapping("/**").allowedOrigins("http://springnet-angular-app.s3-website.us-east-2.amazonaws.com/*", "http://localhost:4200").allowedHeaders("*");
+                registry.addMapping("/media/**").allowedOrigins("http://springnet-angular-app.s3-website.us-east-2.amazonaws.com/*", "http://localhost:4200").allowedHeaders("*");
+                registry.addMapping("/spring-websocket/**").allowedOrigins("http://localhost:4200").allowedHeaders("*");
             }
         };
     }
@@ -90,10 +94,10 @@ public class WebSecurityConfig {
     @Bean
     public CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration configuration = new CorsConfiguration();
-        configuration.setAllowedOrigins(Arrays.asList("*"));
+        configuration.setAllowedOrigins(List.of("*"));
         configuration.setAllowedMethods(Arrays.asList("GET", "POST", "OPTIONS"));
-        configuration.setAllowedHeaders(Arrays.asList("*"));
-        configuration.setExposedHeaders(Arrays.asList("Authorization"));
+        configuration.setAllowedHeaders(List.of("*"));
+        configuration.setExposedHeaders(List.of("Authorization"));
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
         source.registerCorsConfiguration("/**", configuration);
         return source;

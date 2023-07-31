@@ -2,7 +2,7 @@ package com.springnet.springnet.controllers;
 
 import java.util.List;
 
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -17,11 +17,10 @@ import com.springnet.springnet.services.PostServiceImpl;
 
 @RestController
 @RequestMapping("/api/posts")
+@AllArgsConstructor
 public class PostController {
- 
-    @Autowired
-    private PostServiceImpl postService;
 
+    private final PostServiceImpl postService;
 
     @GetMapping("/{userId}")
     public List<Post> getPostByFollowing(@PathVariable Long userId){
@@ -35,7 +34,7 @@ public class PostController {
 
     @PostMapping("/like")
     public void likePost(@RequestBody Like like){
-        postService.likepost(like);
+        postService.likePost(like);
     }
 
     @PostMapping("/comment")

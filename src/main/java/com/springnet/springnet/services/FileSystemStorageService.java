@@ -41,6 +41,7 @@ public class FileSystemStorageService implements StorageService{
             }
     
             String fileName = file.getOriginalFilename();
+            assert fileName != null;
             Path destinationFile = rootLocation.resolve(Paths.get(fileName)).normalize().toAbsolutePath();
 
             try(InputStream inputStream = file.getInputStream()){
@@ -66,7 +67,7 @@ public class FileSystemStorageService implements StorageService{
                 throw new RuntimeException("Could not read file: " + fileName);
             }
         }catch(MalformedURLException e){
-            throw new RuntimeException("Could not read filesss: " + fileName);
+            throw new RuntimeException("Could not read files: " + fileName);
         }
     }
     

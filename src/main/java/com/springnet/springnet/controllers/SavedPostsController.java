@@ -2,7 +2,7 @@ package com.springnet.springnet.controllers;
 
 import java.util.List;
 
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -15,9 +15,9 @@ import com.springnet.springnet.services.SavedPostsService;
 
 @RestController
 @RequestMapping("/api/saved-posts")
+@AllArgsConstructor
 public class SavedPostsController {
-    
-    @Autowired
+
     private SavedPostsService savedPostsService;
 
     @GetMapping("/{userId}")

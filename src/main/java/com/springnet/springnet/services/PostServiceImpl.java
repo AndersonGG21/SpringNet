@@ -5,8 +5,6 @@ import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
-
-import jakarta.persistence.Query;
 import org.springframework.data.domain.Example;
 import org.springframework.stereotype.Service;
 
@@ -15,14 +13,12 @@ import com.springnet.springnet.models.Follow;
 import com.springnet.springnet.models.Like;
 import com.springnet.springnet.models.Post;
 import com.springnet.springnet.repositories.PostRepository;
-
-import jakarta.persistence.EntityManager;
-
 import com.springnet.springnet.repositories.CommentRepository;
 import com.springnet.springnet.repositories.FollowRepository;
 import com.springnet.springnet.repositories.LikeRepository;
 
 @Service
+@SuppressWarnings("unchecked")
 public class PostServiceImpl implements PostService{
 
     private final FollowRepository followRepo;
@@ -64,7 +60,7 @@ public class PostServiceImpl implements PostService{
     }
 
     @Override
-    public void likepost(Like like) {
+    public void likePost(Like like) {
         Like newLike = likeRepo.findByPostAndUser(like.getPost(), like.getUser());
         System.out.println(newLike);
 
@@ -86,17 +82,12 @@ public class PostServiceImpl implements PostService{
         commentRepo.save(comment);
     }
 
-    public Long countSameComment(Comment comment){
-        return commentRepo.count(Example.of(comment));
-    }
 
     public Long countLike(Like like){
         return likeRepo.count(Example.of(like));
     }
 
     public int countLikes(Long postId) {
-        //String sqlQuery = "SELECT COUNT(post_id) FROM `likes` WHERE post_id = ?";
-        //return (Long) em.createNativeQuery(sqlQuery).setParameter(1,postId).getSingleResult();
         return likeRepo.countLikesByPostId(postId);
     }
 
@@ -112,9 +103,7 @@ public class PostServiceImpl implements PostService{
 
     @Override
     public List<Post> findLikedPostsByUserId(Long userId) {
-        //String sqlQuery = "SELECT l.post FROM Like l WHERE l.user.id = :userId";
-
-        //Query query = em.createQuery(sqlQuery).setParameter("userId",userId);
-        return (List<Post>)likeRepo.findPostsLikedByUserId(userId);
+        List<Like> likes = likeRepo.findPostsLikedByUserId(userId);
+        return likes.stream().map(Like::getPost).toList();
     }
 }

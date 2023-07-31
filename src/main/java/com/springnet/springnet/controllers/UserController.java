@@ -3,7 +3,7 @@ package com.springnet.springnet.controllers;
 
 import java.util.List;
 
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.AllArgsConstructor;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -14,24 +14,18 @@ import com.springnet.springnet.services.UserServiceImpl;
 
 @RestController
 @RequestMapping("/api/users")
+@AllArgsConstructor
 public class UserController {
-    
-    @Autowired
-    private UserServiceImpl userService;
+    private final UserServiceImpl userService;
 
     @GetMapping("/{userId}")
     public User getUserProfile(@PathVariable Long userId){
         return userService.getUserProfile(userId);
     }
     
-    @PostMapping("/newUser")
+    @PostMapping("/new-user")
     public void createUser(@Validated @RequestBody User newUser){
         userService.createUser(newUser);
-    }
-
-    @PostMapping("/test")
-    public void number(@RequestBody int number){
-        System.out.println(number);
     }
 
     @GetMapping("/by-email/{email}")

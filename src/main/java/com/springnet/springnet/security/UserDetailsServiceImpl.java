@@ -1,6 +1,6 @@
 package com.springnet.springnet.security;
 
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.AllArgsConstructor;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -10,10 +10,11 @@ import com.springnet.springnet.models.User;
 import com.springnet.springnet.repositories.UserRepository;
 
 @Service
+@AllArgsConstructor
 public class UserDetailsServiceImpl implements UserDetailsService {
 
-    @Autowired
-    private UserRepository userRepo;
+
+    private final UserRepository userRepo;
 
     @Override
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {

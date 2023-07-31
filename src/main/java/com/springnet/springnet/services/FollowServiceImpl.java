@@ -2,10 +2,9 @@ package com.springnet.springnet.services;
 
 import java.time.LocalDate;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import com.springnet.springnet.models.User;
-import jakarta.persistence.EntityManager;
-import jakarta.persistence.PersistenceContext;
 import org.springframework.data.domain.Example;
 import org.springframework.stereotype.Service;
 
@@ -43,19 +42,15 @@ public class FollowServiceImpl implements FollowService{
     }
 
     @Override
-    public List<?> getFollowers(Long id) {
-        //String hql = "SELECT f.follower FROM Follow f WHERE f.following.id = :id";
-        //Query query = em.createQuery(hql);
-        //query.setParameter("id", id);
-        return fRepository.findFollowersByFollowingId(id);
+    public List<User> getFollowers(Long id) {
+        List<Follow> follows = fRepository.findByFollowingId(id);
+        return follows.stream().map(Follow::getFollower).toList();
     }
 
     @Override
     public List<?> getFollowings(Long id) {
-        //String hql = "SELECT f.following FROM Follow f WHERE f.follower.id = :id";
-        //Query query = em.createQuery(hql);
-        //query.setParameter("id", id);
-        return fRepository.findFollowingByFollowerId(id);
+        List<Follow> follows = fRepository.findByFollowerId(id);
+        return follows.stream().map(Follow::getFollowing).toList();
     }
     
 }

@@ -27,30 +27,6 @@ public class StoryServiceImp implements StoryService {
     }
 
     @Override
-    public Story getStoryById(Long id) {
-        return storyRepository.findById(id).orElse(null);
-    }
-
-    @Override
-    public boolean deleteStoryById(Long id) {
-        if (storyRepository.existsById(id)) {
-            storyRepository.deleteById(id);
-            return true;
-        }
-        return false;
-    }
-
-   /* @Override
-    public List<Story> getStoriesByUserIdAndNotViewed(Long userId) {
-        List<Story> stories = storyRepository.findByRelationFollowerId(userId);
-        List<StoryView> views = storyViewRepository.findByUserId(userId);
-        Set<Story> viewedStories = views.stream().map(StoryView::getStory).collect(Collectors.toSet());
-        return stories.stream().filter(story -> !viewedStories.contains(story))
-                .collect(Collectors.toList());
-
-    }*/
-
-    @Override
     public List<Story> getStoriesByFollowing(Long userId) {
         List<Follow> followings = followRepository.findByFollowerId(userId);
         List<Story> stories = new ArrayList<>();

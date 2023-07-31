@@ -1,7 +1,7 @@
 package com.springnet.springnet.controllers;
 
 import com.springnet.springnet.models.User;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -16,10 +16,11 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/follows")
+@AllArgsConstructor
+@SuppressWarnings("unchecked")
 public class FollowController {
-    
-    @Autowired
-    private FollowService followService;
+
+    private final FollowService followService;
 
     @PostMapping("/follow-user")
     public void setFollow(@RequestBody Follow follow){

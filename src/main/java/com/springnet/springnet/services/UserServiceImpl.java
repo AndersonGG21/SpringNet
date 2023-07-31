@@ -5,18 +5,17 @@ import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.List;
 
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.AllArgsConstructor;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
-
 import com.springnet.springnet.models.User;
 import com.springnet.springnet.repositories.UserRepository;
 
 @Service
+@AllArgsConstructor
 public class UserServiceImpl implements UserService{
 
-    @Autowired
-    private UserRepository userRepo;
+    private final UserRepository userRepo;
 
     @Override
     public User getUserProfile(Long id) {

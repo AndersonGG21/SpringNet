@@ -1,8 +1,6 @@
 package com.springnet.springnet.services;
 
 import com.springnet.springnet.models.Follow;
-import com.springnet.springnet.models.User;
-
 import java.util.List;
 
 public interface FollowService {

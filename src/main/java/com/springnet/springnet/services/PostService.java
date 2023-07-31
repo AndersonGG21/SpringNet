@@ -9,7 +9,7 @@ public interface PostService {
     
     List<Post> findPostByFollowing(Long userId);
     void createPost(Post post);
-    void likepost(Like like);
+    void likePost(Like like);
     void comment(Comment comment);
     List<Post> findPostByUser(Long userId);
     List<Comment> findCommentByPostId(Long postId);
